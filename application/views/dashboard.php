@@ -207,9 +207,9 @@
                                                     var pathname = window.location.pathname;
                                                     if(pathname!=="/task-it/welcome"){
                                                         window.location.href = "<?=base_url();?>";
-                                                        setTimeout(function(){ $("#table-request").DataTable().columns().search("").draw(); },1500);
+                                                        setTimeout(function(){ $("#table-request").DataTable().columns(5).search("").draw(); },1500);
                                                     } else {
-                                                        $("#table-request").DataTable().columns().search("").draw();
+                                                        $("#table-request").DataTable().columns(5).search("").draw();
                                                     }
                                                 '>
                                                     <span class="pcoded-mtext">All Request</span>
@@ -220,11 +220,10 @@
                                                 <a style="cursor: pointer;" onclick='
                                                 var pathname = window.location.pathname;
                                                     if(pathname!=="/task-it/welcome"){
-                                                        setTimeout(function() { alert("Hello"); }, 3000);
                                                         window.location.href = "<?=base_url();?>";
-                                                        setTimeout(function(){ $(this).click();alert("sudah") },2500);
+                                                        setTimeout(function(){ $("#table-request").DataTable().columns(5).search("<?=$nik;?>").draw(); },1500);
                                                     } else {
-                                                        $("#table-request").DataTable().columns(4).search("<?=$nik;?>").draw();
+                                                        $("#table-request").DataTable().columns(5).search("<?=$nik;?>").draw();
                                                     }
                                                 '>
                                                     <span class="pcoded-mtext">My Request</span>
