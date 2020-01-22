@@ -96,7 +96,7 @@ class m_request extends CI_Model
 			// //$this->db->select('k1');
 			// //$this->db->from('matriks');
 			// //$this->db->order_by('k1','DESC');
-			// //$max1 = $this->db->get();
+			// //$max1 = $this->db->post();
 			// //$maxk1 = $query->result();
 			// //$maxk1= $this->db->count_all_results();
       //
@@ -106,7 +106,7 @@ class m_request extends CI_Model
 			// //$this->db->select('k1');
 			// //$this->db->from('matriks');
 			// //$this->db->order_by('k1','DESC');
-			// //$max1= $this->db->get('k1');
+			// //$max1= $this->db->post('k1');
       //
       //
       //
@@ -129,11 +129,11 @@ class m_request extends CI_Model
                 'deskripsi' => '['.$this->input->post('kepentingan').'] - '.$this->input->post('deskripsi'),
                 'divisiTujuan' => $this->input->post('divisi'),
                 'requester' => $this->input->post('requester'),
-                'tanggalRequest' => $this->gantiTanggal($this->input->post('tanggalRequest')),
-        				'skor_saw' => $saw,
+                'tanggalRequest' => date("d/m/Y"),
+        				'skor_saw' => "",
                 'status' => 'new'
             );
-            $this->db->insert('request',$data);
+            return $this->db->insert('request',$data);
 
 
         } else if ($this->input->post('tipe')=="update"){

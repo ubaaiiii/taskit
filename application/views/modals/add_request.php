@@ -154,18 +154,30 @@ echo "<script>
           }
           var dataReq = $(this).serialize();
           console.log(dataReq);
-          // $('#submit').html("<i class='fa fa-circle-notch fa-pulse'></i> Loading...")
-          // console.log(tipes);
-          // $.ajax({
-          //     url: "<?=base_url('proses/simpan/request');?>",
-          //     type: "post",
-          //     data: "tipe="+tipes+"&requester="+requester+"&tanggalRequest="+today+"&"+$(this).serialize(),
-          //     success: function(data){
-          //         console.log(data);
-          //         $('#table-divisi').DataTable().ajax.reload();
-          //         $('#large-Modal').modal('hide');
-          //     }
-          // })
+
+          $.ajax({
+              url: "<?=base_url('proses/simpan/request');?>",
+              type: "post",
+              data: dataReq,
+              success: function(data){
+                if (data=="true"){
+                  // console.log(data);
+                  $('#table-divisi').DataTable().ajax.reload();
+                  $('#large-Modal').modal('hide');
+                  Swal.fire(
+      							'Berhasil!',
+      							'Data request telah tersimpan.',
+      							'success'
+      						)
+                } else {
+                  Swal.fire(
+      							'Gagal!',
+      							'Data yang dikirim salah.',
+      							'error'
+      						)
+                }
+              }
+          })
         })
 
         $('#form-divisi').submit('click',function(e){
