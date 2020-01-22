@@ -352,11 +352,6 @@ if (!empty($sebagai)) {
           if($('#catatan').val()==''){
             alert('Catatan harus diisi');
           } else {
-            if(request.some(data => data.id === id.toString())){
-                $('#tipe').val('update');
-            } else {
-              $('#tipe').val('save');
-            }
             e.preventDefault();
             $('#tipe').val('reject');
             console.log($('#request').serialize());

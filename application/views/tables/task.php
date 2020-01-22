@@ -31,8 +31,7 @@
             },
             {
                 title: "Ditugaskan",
-                data: "dikerjakanOleh",
-                visible: false
+                data: "dikerjakanOleh"
             },
             {
                 title: "Status",

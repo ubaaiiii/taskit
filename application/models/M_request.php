@@ -140,7 +140,7 @@ class m_request extends CI_Model
             $this->db->set('status','onprogress');
             $this->db->set('catatanTugas',$this->input->post('catatan'));
             $this->db->set('tanggalDikerjakan',date('d/m/Y', strtotime(' +1 day')));
-            $this->db->set('dikerjakanOleh',$this->input->post('atribut'));
+            $this->db->set('dikerjakanOleh',$this->input->post('ditugaskan'));
             $this->db->where('kodeRequest',$this->input->post('kodeRequest'));
             return $this->db->update('request');
 

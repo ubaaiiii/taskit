@@ -21,5 +21,10 @@ class m_task extends CI_Model
     {
         return $this->db->get_where('request',array('divisiTujuan' => $id))->num_rows();
     }
-    
+
+    function your_task($id)
+    {
+      return $this->db->get_where('request', array('dikerjakanOleh' => $id))->num_rows();
+    }
+
 }
