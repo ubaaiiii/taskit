@@ -21,7 +21,7 @@ class Kepentingan extends CI_Controller
 		$data['request']['your'] = $this->M_request->your_request($nik);
 		$data['task']['your'] = $this->M_task->all_my_task($nik);
 		$data['task']['divisi'] = $this->M_task->all_divisi_task($this->session->user['divisi']);
-		$data['judul'] = "Divisi";
+		$data['judul'] = "Kepentingan";
 		$data['page'] = "tables/kepentingan";
 		$data['nama'] = $this->session->user['nama'];
 		$this->load->view('dashboard', $data);

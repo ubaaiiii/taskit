@@ -6,7 +6,7 @@ class m_kepentingan extends CI_Model
     {
         parent::__construct();
     }
-    
+
     function get_all_kepentingan()
     {
         return $this->db->get('kepentingan')->result_array();
@@ -26,8 +26,10 @@ class m_kepentingan extends CI_Model
     {
         if ($this->input->post('tipe')=="save"){
             $data = array(
-                'id' => $this->input->post('kodekepentingan'),
-                'kepentingan' => ucwords($this->input->post('kepentingan'))
+                'id' => $this->input->post('id'),
+                'kode' => $this->input->post('kode'),
+                'skor' => $this->input->post('skor'),
+                'kepentingan' => ucwords($this->input->post('deskripsi'))
             );
             return $this->db->insert('kepentingan',$data);
 
@@ -38,7 +40,7 @@ class m_kepentingan extends CI_Model
 
         } else if ($this->input->post('tipe')=="delete"){
             $this->db->where('id',$this->input->post('kodekepentingan'));
-            return $this->db->delete('kepentingan');   
+            return $this->db->delete('kepentingan');
 
         }
     }

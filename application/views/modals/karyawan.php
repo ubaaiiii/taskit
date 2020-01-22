@@ -135,7 +135,7 @@
                             </div>
                         </div>
                     </fieldset>
-        		</div>    
+        		</div>
         	</div>
         </div>
     <div class="modal-footer">
@@ -179,17 +179,22 @@
                 type: "post",
                 data: "tipe="+tipes+"&"+$(this).serialize(),
                 success: function(data){
+									Swal.fire(
+	                  'Saved!',
+	                  'Your file has been saved.',
+	                  'success'
+	                )
                     var dt = $.parseJSON(data);
                     $('#table-karyawan').DataTable().ajax.reload();
                     $('#large-Modal').modal('hide');
-                    $.ajax({
-                        url: "<?=base_url('proses/kirim_email');?>",
-                        type: "post",
-                        data: "nama="+dt.nama+"&username="+dt.username+"&password="+dt.password+"&email="+dt.email,
-                        success: function(data){
-                            console.log(data);
-                        }
-                    })
+                    // $.ajax({
+                    //     url: "<?=base_url('proses/kirim_email');?>",
+                    //     type: "post",
+                    //     data: "nama="+dt.nama+"&username="+dt.username+"&password="+dt.password+"&email="+dt.email,
+                    //     success: function(data){
+                    //         console.log(data);
+                    //     }
+                    // })
                 }
             })
         });

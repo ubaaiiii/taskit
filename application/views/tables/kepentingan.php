@@ -54,7 +54,7 @@
                     className: 'btn-tambah',
                     action: function (e,dt,node,config) {
                         $("#trigger-modal").click();
-                        $("#load-modal-here").load("modal/divisi/t");
+                        $("#load-modal-here").load("modal/kepentingan/t");
                     }
                 }
             ],
@@ -70,6 +70,10 @@
                 {
                     title: "Deskripsi",
                     data: "deskripsi"
+                },
+                {
+                    title: "Skor",
+                    data: "skor"
                 }
             ],
             initComplete: function() {
@@ -91,6 +95,6 @@
             }
         });
 
-        
+
     });
 </script>

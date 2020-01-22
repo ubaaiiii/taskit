@@ -6,33 +6,31 @@
 </div>
 
 <?php
-    $js_divisi = json_encode($detail_kepentingan);
-    $js_all_divisi = json_encode($all_kepentingan);
-    $js_num_divisi = json_encode($num_kepentingan);
+    $js_kepentingan = json_encode($detail_kepentingan);
+    $js_all_kepentingan = json_encode($all_kepentingan);
+    $js_num_kepentingan = json_encode($num_kepentingan);
     echo "<script>
-            var detail = {$js_divisi};
-            var divisi = {$js_all_divisi};
-            var numDivisi = {$js_num_divisi};
+            var detail = {$js_kepentingan};
+            var kepentingan = {$js_all_kepentingan};
+            var numKepentingan = {$js_num_kepentingan};
             // console.log(numDivisi);
           </script>";
 
     if ($sebagai=="tambah"){
         echo "<script>
-                for(a=1;a<=numDivisi+1;a++){
-                    if(!divisi.some(data => data.id === a.toString())){
-                        $('#kodeDivisi').val(a);
+                for(a=1;a<=numKepentingan+1;a++){
+                    if(!kepentingan.some(data => data.id === a.toString())){
+                        $('#id').val(a);
                         break;
                     }
                 }
               </script>";
     } else if($sebagai=="edit"){
-?>
 
-    <script>
+    	echo "<script>
         $('#delete').removeAttr('style');
-    </script>
+    </script>";
 
-<?php
     } else if($sebagai=="view"){
 
     } else {
@@ -55,19 +53,31 @@
         <div class="modal-body">
         	<div class="card">
         		<div class="card-block">
+        			<div hidden class="form-group row">
+        	            <label class="col-sm-3 col-form-label">ID</label>
+        	            <div class="col-sm-9">
+        	                <input required id="id" name="id" type="text" class="form-control" placeholder="Kode Kepentingan">
+        	            </div>
+        	        </div>
         			<div class="form-group row">
         	            <label class="col-sm-3 col-form-label">Kode</label>
         	            <div class="col-sm-9">
-        	                <input required id="kode" name="kode" type="text" class="form-control" placeholder="Kode Divisi">
+        	                <input required id="kode" name="kode" type="text" class="form-control" placeholder="Kode Kepentingan">
         	            </div>
         	        </div>
         	        <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Divisi</label>
+                        <label class="col-sm-3 col-form-label">Deskripsi</label>
                         <div class="col-sm-9">
                             <textarea id="deskripsi" name="deskripsi" class="form-control max-textarea" maxlength="255" rows="4"></textarea>
                         </div>
                     </div>
-        			
+										<div class="form-group row">
+				                <label class="col-sm-3 col-form-label">Skor</label>
+				                <div class="col-sm-9">
+				                    <input required id="skor" name="skor" type="range" value="0" min="0" max="100" class="form-control">
+				                </div>
+				            </div>
+
         		</div>
         	</div>
         </div>
@@ -80,7 +90,7 @@
 </form>
 <script>
 	$(document).ready(function(){
-        
+
         $('textarea[maxlength]').maxlength({
             threshold: 255
         });
@@ -88,7 +98,9 @@
         if (detail !== null){
             // console.log(detail);
             $('#kode').val(detail.kode);
+            $('#id').val(detail.id);
             $('#deskripsi').val(detail.deskripsi);
+            $('#skor').val(detail.skor);
         };
 
         $('#form-divisi').submit('click',function(e){
@@ -102,13 +114,21 @@
             $('#submit').html("<i class='fa fa-circle-notch fa-pulse'></i> Loading...")
             // console.log(tipes);
             $.ajax({
-                url: "<?=base_url('proses/simpan/divisi');?>",
+                url: "<?=base_url('proses/simpan/kepentingan');?>",
                 type: "post",
                 data: "tipe="+tipes+"&"+$(this).serialize(),
                 success: function(data){
-                    console.log(data);
-                    $('#table-divisi').DataTable().ajax.reload();
-                    $('#large-Modal').modal('hide');
+									if (data=="true"){
+										console.log(data);
+										$('#table-divisi').DataTable().ajax.reload();
+										$('#large-Modal').modal('hide');
+									} else {
+										Swal.fire(
+											'Gagal!',
+											'Salah kirim data.',
+											'error'
+										)
+									}
                 }
             })
         });
@@ -125,6 +145,15 @@
                 }
             })
         })
+				$('input[type="range"]').rangeslider({
+				    polyfill : false,
+				    onInit : function() {
+				        this.output = $( '<div class="range-output" />' ).insertAfter( this.$range ).html( this.$element.val() );
+				    },
+				    onSlide : function( position, value ) {
+				        this.output.html( value );
+				    }
+				});
 
 	})
 </script>

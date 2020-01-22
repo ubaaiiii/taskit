@@ -20,7 +20,7 @@
                             </tr>
                         </thead>
                         <tbody style="cursor: pointer;">
-                            
+
                         </tbody>
                     </table>
                 </div>
@@ -72,14 +72,14 @@
                 var found = divisi.find(function(element) {
                   return element.id == data;
                 });
-                return found.divisi;
+                return (found==undefined)?("kesalahan kode"):(found.divisi);
              }},
             {data:"jabatan",
              render: function(data,type,row,meta){
                 var found = jabatan.find(function(element) {
                   return element.id == data;
                 });
-                return found.jabatan;
+                return (found==undefined)?("kesalahan kode"):(found.jabatan);
              }}
         ],
         initComplete: function () {
