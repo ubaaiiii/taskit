@@ -202,15 +202,34 @@
         $('#delete').click(function(){
             var id = $('#nik').val();
             // console.log(id);
-            $.ajax({
-                url: "<?=base_url('proses/simpan/karyawan');?>",
-                type: "post",
-                data: "tipe=delete&nik="+id,
-                success: function(data){
-                    $('#table-karyawan').DataTable().ajax.reload();
-                    $('#large-Modal').modal('hide');
-                }
+						Swal.fire({
+              title: 'Are you sure?',
+              text: "You won't be able to revert this!",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+              if (result.value) {
+								$.ajax({
+		                url: "<?=base_url('proses/simpan/karyawan');?>",
+		                type: "post",
+		                data: "tipe=delete&nik="+id,
+		                success: function(data){
+		                    $('#table-karyawan').DataTable().ajax.reload();
+		                    $('#large-Modal').modal('hide');
+		                }
+		            })
+                Swal.fire(
+                  'Deleted!',
+                  'Your file has been deleted.',
+                  'success'
+                )
+              }
             })
+
+
         })
 
 		$('.selectd').select2({
