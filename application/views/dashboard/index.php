@@ -156,12 +156,6 @@
                         return "<textarea readonly class='float-left' width='100%' rows='1'>" + data + "</textarea>";
                     }
                 },
-				{
-                    data: "skor_saw",
-                    render: function(data, type, row, meta) {
-                        return "<textarea readonly class='float-center' width='100%' rows='1'>" + data + "</textarea>";
-                    }
-                },
                 {
                     data: null, render: function ( data, type, row, meta, dataToSet ) {
                         // return data.kodeRequest+' '+data.status;

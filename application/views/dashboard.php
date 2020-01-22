@@ -205,7 +205,7 @@
                                             <li class="">
                                                 <a style="cursor: pointer;" onclick='
                                                     var pathname = window.location.pathname;
-                                                    if(pathname!=="/task-it/welcome"){
+                                                    if(pathname!=="/taskit/welcome"){
                                                         window.location.href = "<?=base_url();?>";
                                                         setTimeout(function(){ $("#table-request").DataTable().columns(5).search("").draw(); },1500);
                                                     } else {
@@ -219,7 +219,8 @@
                                             <li class="">
                                                 <a style="cursor: pointer;" onclick='
                                                 var pathname = window.location.pathname;
-                                                    if(pathname!=="/task-it/welcome"){
+                                                console.log(pathname);
+                                                    if(pathname!=="/taskit/welcome"){
                                                         window.location.href = "<?=base_url();?>";
                                                         setTimeout(function(){ $("#table-request").DataTable().columns(5).search("<?=$nik;?>").draw(); },1500);
                                                     } else {
