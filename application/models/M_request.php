@@ -137,10 +137,19 @@ class m_request extends CI_Model
 
 
         } else if ($this->input->post('tipe')=="update"){
-            $this->db->set('deskripsi',$this->input->post('deskripsi'));
-            $this->db->set('bobot',$this->input->post('bobot'));
-            $this->db->set('atribut',$this->input->post('atribut'));
-            $this->db->where('kode',$this->input->post('kode'));
+            $this->db->set('status','onprogress');
+            $this->db->set('catatanTugas',$this->input->post('catatan'));
+            $this->db->set('tanggalDikerjakan',date('d/m/Y', strtotime(' +1 day')));
+            $this->db->set('dikerjakanOleh',$this->input->post('atribut'));
+            $this->db->where('kodeRequest',$this->input->post('kodeRequest'));
+            return $this->db->update('request');
+
+        } else if ($this->input->post('tipe')=="progress"){
+            $this->db->set('status','onprogress');
+            $this->db->set('catatanTugas',$this->input->post('catatan'));
+            $this->db->set('tanggalDikerjakan',date('d/m/Y', strtotime(' +1 day')));
+            $this->db->set('dikerjakanOleh',$this->input->post('atribut'));
+            $this->db->where('kode',$this->input->post('kodeRequest'));
             return $this->db->update('list_kriteria',$data);
 
         } else if ($this->input->post('tipe')=="reject"){

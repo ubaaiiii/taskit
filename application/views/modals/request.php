@@ -352,8 +352,53 @@ if (!empty($sebagai)) {
           if($('#catatan').val()==''){
             alert('Catatan harus diisi');
           } else {
+            if(request.some(data => data.id === id.toString())){
+                $('#tipe').val('update');
+            } else {
+              $('#tipe').val('save');
+            }
             e.preventDefault();
             $('#tipe').val('reject');
+            console.log($('#request').serialize());
+            $.ajax({
+                url: "<?=base_url('proses/simpan/request');?>",
+                type: "post",
+                data: $('#request').serialize(),
+                success: function(data){
+                  if (data=="true"){
+                    $('#table-request').DataTable().ajax.reload();
+                    $('#large-Modal').modal('hide');
+                    Swal.fire(
+        							'Berhasil!',
+        							'Data request telah tersimpan.',
+        							'success'
+        						)
+                  } else {
+                    Swal.fire(
+        							'Gagal!',
+        							'Salah kirim data.',
+        							'error'
+        						)
+                  }
+                }
+            })
+          }
+        });
+        $('#submit').click(function(e){
+          if($('#catatan').val()==''){
+            alert('Catatan harus diisi');
+          } else {
+            e.preventDefault();
+            var id = $('#kodeRequest').val();
+            if(request.some(data => data.kodeRequest === id.toString())){
+              if($('#status').text()=="Baru"){
+                $('#tipe').val('update');
+              } else {
+                $('#tipe').val('progress');
+              }
+            } else {
+              $('#tipe').val('save');
+            }
             console.log($('#request').serialize());
             $.ajax({
                 url: "<?=base_url('proses/simpan/request');?>",
