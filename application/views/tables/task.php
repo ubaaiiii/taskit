@@ -40,6 +40,13 @@
                 visible: false
             },
             {
+                title: "Proses!",
+                data: "status",
+                render: function ( data, type, row, meta, dataToSet ) {
+                    return "<a style='cursor:pointer;' id='progress' data='" + row.kodeRequest + "' class='label label-primary'><strong>Proses!</strong></a>";
+                }
+            },
+            {
                 title: "Diminta Oleh",
                 data: "requester"
             },
@@ -73,7 +80,7 @@
                             case "onprogress":
                                 return "<a style='cursor:pointer;' id='view' data='" + row.kodeRequest + "' class='label label-warning'><strong>On Progress</strong></a>";
                             case "new":
-                                return "<a style='cursor:pointer;' id='process' data='" + row.kodeRequest + "' class='label label-primary'><strong>New</strong></a>";
+                                return "<a style='cursor:pointer;' id='process' data='" + row.kodeRequest + "' class='label label-primary'><strong>Process!</strong></a>";
                             case "rejected":
                                 return "<a  style='cursor:pointer;' id='view' data='" + row.kodeRequest + "' class='label label-danger'><strong>Rejected</strong></a>";
                             default:
@@ -151,6 +158,14 @@
                 // console.log(this.getAttribute("data"));
                 $("#trigger-modal").click();
                 $("#load-modal-here").load("modal/request/v/" + datas);
+            }
+        });
+        $('#table-task tbody').on('click', 'a#progress', function() {
+            if (table_task.rows().count() !== 0) {
+                var datas = this.getAttribute("data");
+                // console.log(this.getAttribute("data"));
+                $("#trigger-modal").click();
+                $("#load-modal-here").load("modal/task/p/" + datas);
             }
         });
 </script>

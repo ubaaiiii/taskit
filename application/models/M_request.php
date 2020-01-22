@@ -145,12 +145,9 @@ class m_request extends CI_Model
             return $this->db->update('request');
 
         } else if ($this->input->post('tipe')=="progress"){
-            $this->db->set('status','onprogress');
-            $this->db->set('catatanTugas',$this->input->post('catatan'));
-            $this->db->set('tanggalDikerjakan',date('d/m/Y', strtotime(' +1 day')));
-            $this->db->set('dikerjakanOleh',$this->input->post('atribut'));
-            $this->db->where('kode',$this->input->post('kodeRequest'));
-            return $this->db->update('list_kriteria',$data);
+            $this->db->set('progress',$this->input->post('progress'));
+            $this->db->where('kodeRequest',$this->input->post('kodeRequest'));
+            return $this->db->update('request');
 
         } else if ($this->input->post('tipe')=="reject"){
             $this->db->set('status','rejected');
@@ -158,6 +155,14 @@ class m_request extends CI_Model
             $this->db->set('catatanDone',$this->input->post('catatan'));
             $this->db->set('tanggalDone',date('d/m/Y', strtotime(' +1 day')));
             $this->db->set('tanggalDikerjakan',date('d/m/Y', strtotime(' +1 day')));
+            $this->db->where('kodeRequest',$this->input->post('kodeRequest'));
+            return $this->db->update('request');
+
+        } else if ($this->input->post('tipe')=="done"){
+            $this->db->set('status','done');
+            $this->db->set('progress',$this->input->post('progress'));
+            $this->db->set('catatanDone',$this->input->post('catatan'));
+            $this->db->set('tanggalDone',date('d/m/Y', strtotime(' +1 day')));
             $this->db->where('kodeRequest',$this->input->post('kodeRequest'));
             return $this->db->update('request');
         }

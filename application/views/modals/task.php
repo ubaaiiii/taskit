@@ -73,6 +73,16 @@ if (!empty($sebagai)) {
                 $('#oleh').val('{$nik}');
                 $('#div-oleh').css('display','none');
               </script>";
+    } else if ($sebagai == "proses") {
+        echo "<script>
+                $('#field-request').attr('disabled',true);
+                $('#progress-div').css('display','none');
+                $('#div-tugas').css('display','none');
+                $('#div-tanggal').css('display','none');
+                $('#div-catatan').css('display','none');
+                $('#progress').removeAttr('style');
+
+              </script>";
     }
 }
 ?>
@@ -110,10 +120,16 @@ if (!empty($sebagai)) {
                 </div>
             </div>
             <form id="request">
+            <div hidden class="form-group row">
+                <label class="col-sm-3 col-form-label">Lemparan Data</label>
+                <div class="col-sm-9">
+                    <input id="tipe" name="tipe" type="text" class="form-control" placeholder="Kode Request" readonly="" value="progress">
+                </div>
+            </div>
             <div class="form-group row">
                 <label class="col-sm-3 col-form-label">Kode Request</label>
                 <div class="col-sm-9">
-                    <input id="kodeRequest" type="text" class="form-control" placeholder="Kode Request" readonly="">
+                    <input id="kodeRequest" name="kodeRequest" type="text" class="form-control" placeholder="Kode Request" readonly="">
                 </div>
             </div>
             <fieldset id="field-request">
@@ -153,15 +169,16 @@ if (!empty($sebagai)) {
                     </div>
                 </div>
             </form>
+          </fieldset>
                 <div class="form-group row" id="div-progress">
                     <label class="col-sm-3 col-form-label">Progress</label>
                     <div class="col-sm-9">
-                        <div class="progress">
+                        <div id="progress-div" class="progress">
                             <div id="status-progress" class="progress-bar progress-bar-striped progress-bar-animated progress-bar-primary" role="progressbar" style="" aria-valuenow="" aria-valuemin="0" aria-valuemax="100"><b id="status-id"></b></div>
                         </div>
+                        <input style="display:none;" required id="progress" name="progress" type="range" value="0" min="0" max="100" class="form-control">
                     </div>
                 </div>
-            </fieldset>
             <fieldset id="field-tugas" style="display: none;">
                 <div class="form-group row">
                     <label class="col-sm-3 col-form-label"><b>Detail Tugas</b></label>
@@ -172,7 +189,7 @@ if (!empty($sebagai)) {
                     </div>
                 </div>
 
-                <div class="form-group row">
+                <div class="form-group row" id="div-tugas">
                     <label class="col-sm-3 col-form-label">Ditugaskan</label>
                     <div class="col-sm-9">
                         <select id="ditugaskan" name="ditugaskan" class="form-control col-sm-12 ">
@@ -180,13 +197,13 @@ if (!empty($sebagai)) {
                         </select>
                     </div>
                 </div>
-                <div class="form-group row">
+                <div class="form-group row" id="div-tanggal">
                     <label class="col-sm-3 col-form-label">Tanggal Done</label>
                     <div class="col-sm-9">
                         <input id="tanggalDone" name="tanggalDone" class="form-control" type="date">
                     </div>
                 </div>
-                <div class="form-group row">
+                <div class="form-group row" id="div-catatan">
                     <label class="col-sm-3 col-form-label">Catatan</label>
                     <div class="col-sm-9">
                         <textarea id="catatan" name="catatan" class="form-control max-textarea" maxlength="255" rows="4"></textarea>
@@ -231,6 +248,7 @@ if (!empty($sebagai)) {
                     $("#status").removeAttr('class');
                     $("#status").addClass('label label-warning');
                     $('#status-progress').attr('class', 'progress-bar progress-bar-striped progress-bar-animated progress-bar-warning');
+                    $('#progress').val(detail.progress);
                     $('#ditugaskan').text(detail.dikerjakanOleh);
                     break;
                 }
@@ -273,10 +291,63 @@ if (!empty($sebagai)) {
             // console.log(detail.divisiTujuan);
         }
 
+        $('#submit').on('click',function(e){
+          e.preventDefault();
+          var progress = $('#progress').val();
+          console.log("progress="+progress+"$"+$('#request').serialize());
+          $('#submit').html("<i class='fa fa-circle-notch fa-pulse'></i> Loading...")
+          // console.log(tipes);
+          $.ajax({
+              url: "<?=base_url('proses/simpan/request');?>",
+              type: "post",
+              data: "progress="+progress+"&"+$('#request').serialize(),
+              success: function(data){
+                if (data=="true"){
+                  console.log(data);
+                  table_task.ajax.reload();
+                  $('#large-Modal').modal('hide');
+                  Swal.fire(
+                    'Saved!',
+                    'Your file has been saved.',
+                    'success'
+                  )
+                } else {
+                  Swal.fire(
+                    'Gagal!',
+                    'Salah kirim data.',
+                    'error'
+                  )
+
+                }
+              }
+          })
+        });
+
         $('#divisi').on('change',function(){
             divKaryawan($('#divisi option:selected').val());
         })
 
-        $('#form')
+        $('input[type="range"]').rangeslider({
+				    polyfill : false,
+				    onInit : function() {
+				        this.output = $( '<div class="range-output" />' ).insertAfter( this.$range ).html( this.$element.val() );
+				    },
+				    onSlide : function( position, value ) {
+				        this.output.html( value );
+				    }
+				});
+        $(document).on('input', '#progress', function() {
+            if ($('#progress').val()==100){
+              $('#div-catatan').removeAttr('style');
+              $('#field-tugas').removeAttr('style');
+              $('#submit').html('Done!');
+              $('#tipe').val('done');
+            } else {
+              $('#tipe').val('progress');
+              $('#submit').html('Save Changes');
+              $('#div-catatan').css('display','none');
+              $('#field-tugas').css('display','none');
+            }
+        });
     });
 </script>
