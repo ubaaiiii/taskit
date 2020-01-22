@@ -129,7 +129,7 @@ class m_request extends CI_Model
                 'deskripsi' => '['.$this->input->post('kepentingan').'] - '.$this->input->post('deskripsi'),
                 'divisiTujuan' => $this->input->post('divisi'),
                 'requester' => $this->input->post('requester'),
-                'tanggalRequest' => date("d/m/Y"),
+                'tanggalRequest' => date('d/m/Y', strtotime(' +1 day')),
         				'skor_saw' => "",
                 'status' => 'new'
             );
@@ -143,19 +143,12 @@ class m_request extends CI_Model
             $this->db->where('kode',$this->input->post('kode'));
             return $this->db->update('list_kriteria',$data);
 
-        } else if ($this->input->post('tipe')=="delete"){
-            $this->db->where('kode',$this->input->post('kode'));
-            $this->db->delete('list_kriteria');
-
-            $this->db->where('kriteria',$this->input->post('kode'));
-            return $this->db->delete('list_nilai');
-
         } else if ($this->input->post('tipe')=="reject"){
             $this->db->set('status','rejected');
             $this->db->set('dikerjakanOleh',$this->session->user['nik']);
             $this->db->set('catatanDone',$this->input->post('catatan'));
-            $this->db->set('tanggalDone',$this->gantiTanggal($this->input->post('tanggalDone')));
-            $this->db->set('tanggalDikerjakan',$this->gantiTanggal($this->input->post('tanggalDone')));
+            $this->db->set('tanggalDone',date('d/m/Y', strtotime(' +1 day')));
+            $this->db->set('tanggalDikerjakan',date('d/m/Y', strtotime(' +1 day')));
             $this->db->where('kodeRequest',$this->input->post('kodeRequest'));
             return $this->db->update('request');
         }

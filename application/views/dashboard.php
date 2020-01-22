@@ -208,8 +208,12 @@
                                                     if(pathname!=="/taskit/welcome"){
                                                         window.location.href = "<?=base_url();?>";
                                                         setTimeout(function(){ $("#table-request").DataTable().columns(5).search("").draw(); },1500);
+                                                        setTimeout(function(){ $("#table-request").DataTable().columns(4).search("").draw(); },1500);
+                                                        setTimeout(function(){ $("#table-request").DataTable().columns(3).search("").draw(); },1500);
                                                     } else {
-                                                        $("#table-request").DataTable().columns(5).search("").draw();
+                                                        $("#table-request").DataTable().columns(2).search("").draw();
+                                                        $("#table-request").DataTable().columns(3).search("").draw();
+                                                        $("#table-request").DataTable().columns(4).search("").draw();
                                                     }
                                                 '>
                                                     <span class="pcoded-mtext">All Request</span>
@@ -219,12 +223,11 @@
                                             <li class="">
                                                 <a style="cursor: pointer;" onclick='
                                                 var pathname = window.location.pathname;
-                                                console.log(pathname);
                                                     if(pathname!=="/taskit/welcome"){
                                                         window.location.href = "<?=base_url();?>";
                                                         setTimeout(function(){ $("#table-request").DataTable().columns(5).search("<?=$nik;?>").draw(); },1500);
                                                     } else {
-                                                        $("#table-request").DataTable().columns(5).search("<?=$nik;?>").draw();
+                                                        $("#table-request").DataTable().columns(4).search("<?=$nik;?>").draw();
                                                     }
                                                 '>
                                                     <span class="pcoded-mtext">My Request</span>

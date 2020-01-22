@@ -207,7 +207,8 @@
         });
 
         $('#req-all').on('click', function() {
-            table_request.columns().search("").draw();
+            table_request.columns(2).search("").draw();
+            table_request.columns(3).search("").draw();
         });
 
         $('#req-your').on('click', function() {

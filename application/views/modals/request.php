@@ -87,6 +87,7 @@ if (!empty($sebagai)) {
                 $('#field-request textarea').css('pointer-events','none');
                 $('#field-request select').css('pointer-events','none');
                 $('#tanggalDone').val(tahun+'-'+bulan+'-'+hari);
+                $('#submit').html('Proses!');
                 // console.log(karyawan);
               </script>";
     }
@@ -123,6 +124,12 @@ if (!empty($sebagai)) {
                     <label class="col-sm-3 col-form-label"><b>Detail Request</b></label>
                     <div class="col-sm-9">
                         <hr style="border:0;height:1px;background-image:linear-gradient(to right,rgba(0,0,0,0),rgba(0,0,0,.75),rgba(0,0,0,0));">
+                    </div>
+                </div>
+                <div hidden class="form-group row">
+                    <label class="col-sm-3 col-form-label">Data Lemparan</label>
+                    <div class="col-sm-9">
+                        <input id="tipe" name="tipe" type="text" class="form-control" placeholder="Kode Request">
                     </div>
                 </div>
                 <div class="form-group row">
@@ -201,7 +208,7 @@ if (!empty($sebagai)) {
                     <div class="form-group row" id="row-catatan">
                         <label class="col-sm-3 col-form-label" id="label-catatan">Catatan</label>
                         <div class="col-sm-9">
-                            <textarea id="catatan" name="catatan" class="form-control max-textarea" maxlength="255" rows="4"></textarea>
+                            <textarea required id="catatan" name="catatan" class="form-control max-textarea" maxlength="255" rows="4"></textarea>
                         </div>
                     </div>
                 </fieldset>
@@ -210,10 +217,7 @@ if (!empty($sebagai)) {
     </div>
     <div class="modal-footer">
         <button id="cancel" type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancel</button>
-		<button id="pending" type="button" class="btn btn-warning waves-effect waves-light ">Pending</button>
-		<button id="onprogress" type="button" class="btn btn-warning waves-effect waves-light ">Proses</button>
-		<button id="done" type="button" class="btn btn-warning waves-effect waves-light ">Done</button>
-        <button id="reject" type="button" class="btn btn-warning waves-effect waves-light ">Reject</button>
+        <button id="reject" type="submit" class="btn btn-danger waves-effect">Reject</button>
         <button id="submit" type="submit" class="btn btn-primary waves-effect waves-light ">Save changes</button>
     </div>
 </form>
@@ -345,21 +349,36 @@ if (!empty($sebagai)) {
         })
 
         $('#reject').click(function(e){
+          if($('#catatan').val()==''){
+            alert('Catatan harus diisi');
+          } else {
             e.preventDefault();
-            if($('#catatan').val()==''){
-                alert('Catatan Harus Diisi');
-            } else {
-                console.log($('#request').serialize());
-            }
+            $('#tipe').val('reject');
+            console.log($('#request').serialize());
             $.ajax({
                 url: "<?=base_url('proses/simpan/request');?>",
                 type: "post",
-                data: "tipe=reject&"+$('#request').serialize(),
+                data: $('#request').serialize(),
                 success: function(data){
+                  if (data=="true"){
                     $('#table-request').DataTable().ajax.reload();
                     $('#large-Modal').modal('hide');
+                    Swal.fire(
+        							'Berhasil!',
+        							'Data request telah tersimpan.',
+        							'success'
+        						)
+                  } else {
+                    Swal.fire(
+        							'Gagal!',
+        							'Salah kirim data.',
+        							'error'
+        						)
+                  }
                 }
             })
+          }
         })
+
     });
 </script>
