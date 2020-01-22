@@ -70,6 +70,10 @@
                 {
                     title: "Divisi",
                     data: "divisi"
+                },
+                {
+                    title: "Skor",
+                    data: "skor"
                 }
             ],
             initComplete: function() {
@@ -91,6 +95,6 @@
             }
         });
 
-        
+
     });
 </script>

@@ -98,7 +98,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            
+
                         </tbody>
                     </table>
                 </div>
@@ -223,22 +223,22 @@
 
         $('#req-new').on('click', function() {
             table_request.columns().search("").draw();
-            table_request.columns(2).search("new|process",true,true).draw();
+            table_request.columns(3).search("new|process",true,true).draw();
         });
 
         $('#req-progress').on('click', function() {
             table_request.columns().search("").draw();
-            table_request.columns(2).search("on progress").draw();
+            table_request.columns(3).search("on progress").draw();
         });
 
         $('#req-done').on('click', function() {
             table_request.columns().search("").draw();
-            table_request.columns(2).search("done").draw();
+            table_request.columns(3).search("done").draw();
         });
 
         $('#req-reject').on('click', function() {
             table_request.columns().search("").draw();
-            table_request.columns(2).search("rejected").draw();
+            table_request.columns(3).search("rejected").draw();
         });
 
 

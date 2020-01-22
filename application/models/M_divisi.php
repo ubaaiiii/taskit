@@ -6,7 +6,7 @@ class m_divisi extends CI_Model
     {
         parent::__construct();
     }
-    
+
     function get_all_divisi()
     {
         return $this->db->get('divisi')->result_array();
@@ -27,7 +27,8 @@ class m_divisi extends CI_Model
         if ($this->input->post('tipe')=="save"){
             $data = array(
                 'id' => $this->input->post('kodeDivisi'),
-                'divisi' => ucwords($this->input->post('divisi'))
+                'divisi' => ucwords($this->input->post('divisi')),
+                'skor' => $this->input->post('skor')
             );
             return $this->db->insert('divisi',$data);
 
@@ -38,7 +39,7 @@ class m_divisi extends CI_Model
 
         } else if ($this->input->post('tipe')=="delete"){
             $this->db->where('id',$this->input->post('kodeDivisi'));
-            return $this->db->delete('divisi');   
+            return $this->db->delete('divisi');
 
         }
     }

@@ -56,67 +56,62 @@ echo "<script>
                         <div class="col-sm-9">
                             <select id="kepentingan" name="kepentingan" class="form-control col-sm-12">
                                 <option selected style="display: none;">Pilih Salah Satu ..</option>
-                                
-                                    <option value="100">Dibutuhkan Sekarang</option>
-									<option value="90">Dibutuhkan Mendesak</option>
-									<option value="80">Penting</option>
-									<option value="70">Lebih Cepat Lebih Baik</option>
-									<option value="60">Dibutuhkan Hari Ini</option>
-									<option value="50">Dibutuhkan Besok</option>
-                               
+                                <?php foreach ($all_kepentingan as $ak) : ?>
+                                    <option value="<?= $ak['skor']; ?>"><?= $ak['deskripsi']; ?></option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
                     </div>
-					
+
 					<div class="form-group row">
                         <label class="col-sm-3 col-form-label">Divisi Tujuan</label>
                         <div class="col-sm-9">
                             <select id="divisi" name="divisi" class="form-control col-sm-12">
                                 <option selected style="display: none;">Pilih Salah Satu ..</option>
                                 <?php foreach ($all_divisi as $ad) : ?>
-                                    <option value="<?= $ad['id']; ?>"><?= $ad['divisi']; ?></option>
+                                    <option value="<?= $ad['skor']; ?>"><?= $ad['divisi']; ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
                     </div>
-					
-					<div class="form-group row">
+
+					<!-- <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Identifikasi Kerusakan</label>
                         <div class="col-sm-9">
                             <select id="rusak" name="rusak" class="form-control col-sm-12">
                                 <option selected style="display: none;">Pilih Salah Satu ..</option>
-                                
+
                                     <option value="100">Berat</option>
 									<option value="80">Sedang</option>
 									<option value="60">Kecil</option>
-									
-                                
+
+
                             </select>
                         </div>
-                    </div>
-					
-					<div class="form-group row">
+                    </div> -->
+
+					<!-- <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Lokasi Divisi</label>
                         <div class="col-sm-9">
                             <select id="lokasi" name="lokasi" class="form-control col-sm-12">
                                 <option selected style="display: none;">Pilih Salah Satu ..</option>
-                                
+
                                     <option value="100">Dekat</option>
 									<option value="80">Sedang</option>
 									<option value="60">Jauh</option>
-									
-                                
+
+
                             </select>
                         </div>
-                    </div>
-					
+                    </div> -->
+
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Deskripsi</label>
                         <div class="col-sm-9">
                             <textarea id="deskripsi" name="deskripsi" class="form-control max-textarea" maxlength="255" rows="4"></textarea>
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
@@ -140,7 +135,7 @@ echo "<script>
             e.preventDefault();
             if($('#kepentingan').val()=='Pilih Salah Satu ..' || $('#divisi').val()=='Pilih Salah Satu ..' || $('#deskripsi').val()==''){
                 alert('Data harus lengkap!');
-            } 
+            }
 			else {
                 console.log("tipe=save&requester="+requester+"&tanggalRequest="+today+"&"+$(this).serialize());
                 $('#submit').html("<i class='fa fa-circle-notch fa-pulse'></i> Loading...");
@@ -155,7 +150,7 @@ echo "<script>
                     }
                 })
 
-			 
+
 			}
         })
 

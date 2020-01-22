@@ -26,13 +26,10 @@
                 }
               </script>";
     } else if($sebagai=="edit"){
-?>
-
-    <script>
-        $('#delete').removeAttr('style');
-    </script>
-
-<?php
+			echo "
+		    <script>
+		        $('#delete').removeAttr('style');
+		    </script>";
     } else if($sebagai=="view"){
 
     } else {
@@ -64,10 +61,16 @@
         	        <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Divisi</label>
                         <div class="col-sm-9">
-                            <textarea id="divisi" name="divisi" class="form-control max-textarea" maxlength="255" rows="4"></textarea>
+                            <textarea required id="divisi" name="divisi" class="form-control max-textarea" maxlength="255" rows="4"></textarea>
                         </div>
                     </div>
-        			
+										<div class="form-group row">
+				                <label class="col-sm-3 col-form-label">Skor</label>
+				                <div class="col-sm-9">
+				                    <input required id="skor" name="skor" type="range" value="0" min="0" max="100" class="form-control">
+				                </div>
+				            </div>
+
         		</div>
         	</div>
         </div>
@@ -80,7 +83,7 @@
 </form>
 <script>
 	$(document).ready(function(){
-        
+
         $('textarea[maxlength]').maxlength({
             threshold: 255
         });
@@ -89,6 +92,7 @@
             // console.log(detail);
             $('#kodeDivisi').val(detail.id);
             $('#divisi').val(detail.divisi);
+            $('#skor').val(detail.skor);
         };
 
         $('#divisi').keypress(function(e){
@@ -98,6 +102,13 @@
         })
 
         $('#form-divisi').submit('click',function(e){
+					if ($('#skor').val()==0){
+						Swal.fire(
+							'Not yet!',
+							'Data divisi harus lengkap.',
+							'error'
+						)
+					} else {
             e.preventDefault();
             var id = $('#kodeDivisi').val();
             if(divisi.some(data => data.id === id.toString())){
@@ -122,6 +133,7 @@
                 )
                 }
             })
+					}
         });
 
         $('#delete').click(function(){
@@ -153,6 +165,16 @@
               }
             })
         })
+
+				$('input[type="range"]').rangeslider({
+				    polyfill : false,
+				    onInit : function() {
+				        this.output = $( '<div class="range-output" />' ).insertAfter( this.$range ).html( this.$element.val() );
+				    },
+				    onSlide : function( position, value ) {
+				        this.output.html( value );
+				    }
+				});
 
 	})
 </script>
