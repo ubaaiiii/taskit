@@ -34,6 +34,7 @@ class m_divisi extends CI_Model
 
         } else if ($this->input->post('tipe')=="update"){
             $this->db->set('divisi',ucwords($this->input->post('divisi')));
+            $this->db->set('skor',$this->input->post('skor'));
             $this->db->where('id',$this->input->post('kodeDivisi'));
             return $this->db->update('divisi');
 

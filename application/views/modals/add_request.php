@@ -45,19 +45,31 @@ echo "<script>
                             <hr style="border:0;height:1px;background-image:linear-gradient(to right,rgba(0,0,0,0),rgba(0,0,0,.75),rgba(0,0,0,0));">
                         </div>
                     </div>
+                    <div hidden class="form-group row">
+                        <label class="col-sm-3 col-form-label">Data Lempar</label>
+                        <div class="col-sm-9">
+                            <input required id="tipe" name="tipe" type="text" class="form-control" placeholder="Kode Request" readonly="">
+                            <input required id="nik" name="requester" type="text" class="form-control" placeholder="Kode Request" readonly="" value="<?=$nik;?>">
+                            <input required id="skorDiv" name="skorDiv" type="text" class="form-control" placeholder="Kode Request" readonly="">
+                            <input required id="skorKep" name="skorKep" type="text" class="form-control" placeholder="Kode Request" readonly="">
+                            <input required id="deskrip" name="deskrip" type="text" class="form-control" placeholder="Kode Request" readonly="">
+                        </div>
+                    </div>
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Kode Request</label>
                         <div class="col-sm-9">
-                            <input id="kodeRequest" name="kodeRequest" type="text" class="form-control" placeholder="Kode Request" readonly="">
+                            <input required id="kodeRequest" name="kodeRequest" type="text" class="form-control" placeholder="Kode Request" readonly="">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Kepentingan/Urgensi</label>
                         <div class="col-sm-9">
-                            <select id="kepentingan" name="kepentingan" class="form-control col-sm-12">
-                                <option selected style="display: none;">Pilih Salah Satu ..</option>
+                            <select required id="kepentingan" name="kepentingan" class="form-control col-sm-12" onchange="
+                              $('#skorKep').val($('option:selected',this).attr('value2'));
+                            ">
+                                <option value="" style="display: none;">Pilih Salah Satu ..</option>
                                 <?php foreach ($all_kepentingan as $ak) : ?>
-                                    <option value="<?= $ak['skor']; ?>"><?= $ak['deskripsi']; ?></option>
+                                    <option value2="<?= $ak['skor']; ?>" value="<?= $ak['kode']; ?>"><?= $ak['deskripsi']; ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -66,10 +78,12 @@ echo "<script>
 					<div class="form-group row">
                         <label class="col-sm-3 col-form-label">Divisi Tujuan</label>
                         <div class="col-sm-9">
-                            <select id="divisi" name="divisi" class="form-control col-sm-12">
-                                <option selected style="display: none;">Pilih Salah Satu ..</option>
+                            <select required id="divisi" name="divisi" class="form-control col-sm-12" onchange="
+                              $('#skorDiv').val($('option:selected',this).attr('value2'));
+                            ">
+                                <option value="" style="display: none;">Pilih Salah Satu ..</option>
                                 <?php foreach ($all_divisi as $ad) : ?>
-                                    <option value="<?= $ad['skor']; ?>"><?= $ad['divisi']; ?></option>
+                                    <option value="<?= $ad['id']; ?>" value2="<?= $ad['skor']; ?>"><?= $ad['divisi']; ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -108,7 +122,7 @@ echo "<script>
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Deskripsi</label>
                         <div class="col-sm-9">
-                            <textarea id="deskripsi" name="deskripsi" class="form-control max-textarea" maxlength="255" rows="4"></textarea>
+                            <textarea required id="deskripsi" name="deskripsi" class="form-control max-textarea" maxlength="255" rows="4"></textarea>
                         </div>
                     </div>
 
@@ -131,27 +145,27 @@ echo "<script>
         });
 
         $('#add-request').submit('click',function(e){
-			//<? echo "makan malam";?>
-            e.preventDefault();
-            if($('#kepentingan').val()=='Pilih Salah Satu ..' || $('#divisi').val()=='Pilih Salah Satu ..' || $('#deskripsi').val()==''){
-                alert('Data harus lengkap!');
-            }
-			else {
-                console.log("tipe=save&requester="+requester+"&tanggalRequest="+today+"&"+$(this).serialize());
-                $('#submit').html("<i class='fa fa-circle-notch fa-pulse'></i> Loading...");
-                $.ajax({
-                    url: "<?=base_url('proses/simpan/request');?>",
-                    type: "post",
-                    data: "tipe=save&requester="+requester+"&tanggalRequest="+today+"&"+$(this).serialize(),
-                    success: function(data){
-                        console.log(data);
-                        $('#table-request').DataTable().ajax.reload();
-                        $('#large-Modal').modal('hide');
-                    }
-                })
-
-
-			}
+          e.preventDefault();
+          var id = $('#kodeRequest').val();
+          if(request.some(data => data.id === id.toString())){
+              $('#tipe').val('update');
+          } else {
+            $('#tipe').val('save');
+          }
+          var dataReq = $(this).serialize();
+          console.log(dataReq);
+          // $('#submit').html("<i class='fa fa-circle-notch fa-pulse'></i> Loading...")
+          // console.log(tipes);
+          // $.ajax({
+          //     url: "<?=base_url('proses/simpan/request');?>",
+          //     type: "post",
+          //     data: "tipe="+tipes+"&requester="+requester+"&tanggalRequest="+today+"&"+$(this).serialize(),
+          //     success: function(data){
+          //         console.log(data);
+          //         $('#table-divisi').DataTable().ajax.reload();
+          //         $('#large-Modal').modal('hide');
+          //     }
+          // })
         })
 
         $('#form-divisi').submit('click',function(e){

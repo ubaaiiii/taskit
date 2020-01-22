@@ -33,7 +33,7 @@ class m_request extends CI_Model
 
     function new_request($id='')   //total request baru
     {
-       
+
 		$this->db->where('status', 'new');
         return $this->db->get('request')->num_rows();
     }
@@ -60,10 +60,10 @@ class m_request extends CI_Model
     {
         return $this->db->get_where('request', array('requester' => $id))->num_rows();
     }
-	
+
 	function maksk1(){
         $this->db->select('k1');
-        $this->db->from('matriks');    
+        $this->db->from('matriks');
         $this->db->order_by('k1', 'desc');
         $query = $this->db->get();
 		$query->row();
@@ -74,69 +74,67 @@ class m_request extends CI_Model
 
     function proses_request()
     {
-
-			
         if ($this->input->post('tipe')=="save"){
-            $bobot = array(0.4,0.3,0.2,0.1);
-			$jlh_k=$this->input->post('kepentingan')+$this->input->post('divisi')+$this->input->post('rusak')+$this->input->post('lokasi');
-			//$jlh_k="2";
-			$matrik = array(
-					'kodeRequest' => $this->input->post('kodeRequest'),
-					'k1' => $this->input->post('kepentingan'),
-					'k2' => $this->input->post('divisi'),
-					'k3' => $this->input->post('rusak'),
-					'k4' => $this->input->post('lokasi'),
-					'hk' => $jlh_k
-					
-			);
-			$this->db->insert('matriks',$matrik);
-			 
-            
-			
-			
-			//NILAI MAX DARI FIELD KRITERIA
-			//$this->db->select('k1');
-			//$this->db->from('matriks');
-			//$this->db->order_by('k1','DESC');
-			//$max1 = $this->db->get();
-			//$maxk1 = $query->result();
-			//$maxk1= $this->db->count_all_results();
-			
-			 //$max1=maksk1();
-			//$query->result();
-			
-			//$this->db->select('k1');
-			//$this->db->from('matriks');
-			//$this->db->order_by('k1','DESC');
-			//$max1= $this->db->get('k1');
-			
-			
+      //       $bobot = array(0.4,0.3,0.2,0.1);
+			// $jlh_k=$this->input->post('kepentingan')+$this->input->post('divisi')+$this->input->post('rusak')+$this->input->post('lokasi');
+			// //$jlh_k="2";
+			// $matrik = array(
+			// 		'kodeRequest' => $this->input->post('kodeRequest'),
+			// 		'k1' => $this->input->post('kepentingan'),
+			// 		'k2' => $this->input->post('divisi'),
+			// 		'k3' => $this->input->post('rusak'),
+			// 		'k4' => $this->input->post('lokasi'),
+			// 		'hk' => $jlh_k
+      //
+			// );
+			// $this->db->insert('matriks',$matrik);
+      //
+      //
+      //
+      //
+			// //NILAI MAX DARI FIELD KRITERIA
+			// //$this->db->select('k1');
+			// //$this->db->from('matriks');
+			// //$this->db->order_by('k1','DESC');
+			// //$max1 = $this->db->get();
+			// //$maxk1 = $query->result();
+			// //$maxk1= $this->db->count_all_results();
+      //
+			//  //$max1=maksk1();
+			// //$query->result();
+      //
+			// //$this->db->select('k1');
+			// //$this->db->from('matriks');
+			// //$this->db->order_by('k1','DESC');
+			// //$max1= $this->db->get('k1');
+      //
+      //
+      //
+      //
+      //
+      //
+      //
+      //
+			// //JUMLAH RECORD
+			// $this->db->select('k1');
+			// $this->db->from('matriks');
+			// $jlh_brs= $this->db->count_all_results();
+      //
+			// $saw =((($jlh_k)/100)*($bobot[0]))*$jlh_brs;
 
-			
-			
-			
-			
-			
-			//JUMLAH RECORD
-			$this->db->select('k1');
-			$this->db->from('matriks');
-			$jlh_brs= $this->db->count_all_results();
-			
-			$saw =((($jlh_k)/100)*($bobot[0]))*$jlh_brs;
-			
-	
-			//simpan data table request
-			$data = array(
+
+      			//simpan data table request
+      			$data = array(
                 'kodeRequest' => $this->input->post('kodeRequest'),
-                'deskripsi' => $this->input->post('deskripsi'),
+                'deskripsi' => '['.$this->input->post('kepentingan').'] - '.$this->input->post('deskripsi'),
                 'divisiTujuan' => $this->input->post('divisi'),
                 'requester' => $this->input->post('requester'),
                 'tanggalRequest' => $this->gantiTanggal($this->input->post('tanggalRequest')),
-				'skor_saw' => $saw,
+        				'skor_saw' => $saw,
                 'status' => 'new'
             );
             $this->db->insert('request',$data);
-			
+
 
         } else if ($this->input->post('tipe')=="update"){
             $this->db->set('deskripsi',$this->input->post('deskripsi'));
@@ -147,10 +145,10 @@ class m_request extends CI_Model
 
         } else if ($this->input->post('tipe')=="delete"){
             $this->db->where('kode',$this->input->post('kode'));
-            $this->db->delete('list_kriteria'); 
-            
+            $this->db->delete('list_kriteria');
+
             $this->db->where('kriteria',$this->input->post('kode'));
-            return $this->db->delete('list_nilai');   
+            return $this->db->delete('list_nilai');
 
         } else if ($this->input->post('tipe')=="reject"){
             $this->db->set('status','rejected');

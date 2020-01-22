@@ -85,7 +85,6 @@
                             <tr>
                                 <th rowspan="2">Kode Request</th>
                                 <th rowspan="2">Deskripsi</th>
-								<th rowspan="2">Skor SAW</th>
                                 <th rowspan="2">Status</th>
                                 <th colspan="2">Request</th>
                                 <th colspan="2">Done</th>
@@ -212,27 +211,27 @@
         });
 
         $('#req-your').on('click', function() {
-            table_request.columns(4).search("<?=$nik;?>").draw();
+            table_request.columns(3).search("<?=$nik;?>").draw();
         });
 
         $('#req-new').on('click', function() {
             table_request.columns().search("").draw();
-            table_request.columns(3).search("new|process",true,true).draw();
+            table_request.columns(2).search("new|process",true,true).draw();
         });
 
         $('#req-progress').on('click', function() {
             table_request.columns().search("").draw();
-            table_request.columns(3).search("on progress").draw();
+            table_request.columns(2).search("on progress").draw();
         });
 
         $('#req-done').on('click', function() {
             table_request.columns().search("").draw();
-            table_request.columns(3).search("done").draw();
+            table_request.columns(2).search("done").draw();
         });
 
         $('#req-reject').on('click', function() {
             table_request.columns().search("").draw();
-            table_request.columns(3).search("rejected").draw();
+            table_request.columns(2).search("rejected").draw();
         });
 
 
