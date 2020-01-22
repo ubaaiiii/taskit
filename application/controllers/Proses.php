@@ -10,6 +10,7 @@ class Proses extends CI_Controller {
 		$this->load->model('m_divisi');
 		$this->load->model('m_request');
 		$this->load->model('M_karyawan');
+		$this->load->model('m_kepentingan');
 		// $this->load->model('m_nilai');
 		// $this->m_nilai->hitung();
 	}
@@ -28,6 +29,10 @@ class Proses extends CI_Controller {
 				$data = $this->m_divisi->proses_divisi();
 				echo json_encode($data);
 				break;
+			case 'kepentingan':
+				$data = $this->m_kepentingan->proses_kepentingan();
+				echo json_encode($data);
+				break;
 			default:
 				$this->load->view();
 				break;
@@ -38,7 +43,7 @@ class Proses extends CI_Controller {
 	{
 		$this->load->config('email');
         $this->load->library('email');
-        
+
         // $kiriman = $this->input->post('nama');
 
         $from = $this->config->item('smtp_user');
@@ -47,7 +52,7 @@ class Proses extends CI_Controller {
         $data['username'] = $this->input->post('username');
         $data['password'] = $this->input->post('password');
         $data['email'] = $to;
-        
+
         $subject = "Razaki: Create Account Success";
 
         $this->email->set_newline("\r\n");

@@ -105,14 +105,14 @@
 
         $('#form-divisi').submit('click',function(e){
             e.preventDefault();
-            var id = $('#kodeDivisi').val();
-            if(divisi.some(data => data.id === id.toString())){
+            var id = $('#id').val();
+            if(kepentingan.some(data => data.id === id.toString())){
                 var tipes = "update";
             } else {
                 var tipes = "save";
             }
             $('#submit').html("<i class='fa fa-circle-notch fa-pulse'></i> Loading...")
-            // console.log(tipes);
+            console.log("tipe="+tipes+"&"+$(this).serialize());
             $.ajax({
                 url: "<?=base_url('proses/simpan/kepentingan');?>",
                 type: "post",
@@ -122,6 +122,11 @@
 										console.log(data);
 										$('#table-divisi').DataTable().ajax.reload();
 										$('#large-Modal').modal('hide');
+										Swal.fire(
+											'Berhasil!',
+											'Data kepentingan telah tersimpan.',
+											'success'
+										)
 									} else {
 										Swal.fire(
 											'Gagal!',

@@ -34,9 +34,10 @@ class m_kepentingan extends CI_Model
             return $this->db->insert('kepentingan',$data);
 
         } else if ($this->input->post('tipe')=="update"){
-            $this->db->set('kepentingan',ucwords($this->input->post('kepentingan')));
+            $this->db->set('deskripsi',ucwords($this->input->post('deskripsi')));
             $this->db->set('skor',$this->input->post('skor'));
-            $this->db->where('id',$this->input->post('kodekepentingan'));
+            $this->db->set('kode',$this->input->post('kode'));
+            $this->db->where('id',$this->input->post('id'));
             return $this->db->update('kepentingan');
 
         } else if ($this->input->post('tipe')=="delete"){
