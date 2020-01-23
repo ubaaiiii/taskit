@@ -176,7 +176,7 @@ if (!empty($sebagai)) {
                         <div id="progress-div" class="progress">
                             <div id="status-progress" class="progress-bar progress-bar-striped progress-bar-animated progress-bar-primary" role="progressbar" style="" aria-valuenow="" aria-valuemin="0" aria-valuemax="100"><b id="status-id"></b></div>
                         </div>
-                        <input style="display:none;" required id="progress" name="progress" type="range" value="0" min="0" max="100" class="form-control">
+                        <input style="display:none;" required id="progress" name="progress" type="range" value="1" min="1" max="100" class="form-control">
                     </div>
                 </div>
             <fieldset id="field-tugas" style="display: none;">
@@ -297,30 +297,30 @@ if (!empty($sebagai)) {
           console.log("progress="+progress+"$"+$('#request').serialize());
           $('#submit').html("<i class='fa fa-circle-notch fa-pulse'></i> Loading...")
           // console.log(tipes);
-          $.ajax({
-              url: "<?=base_url('proses/simpan/request');?>",
-              type: "post",
-              data: "progress="+progress+"&"+$('#request').serialize(),
-              success: function(data){
-                if (data=="true"){
-                  console.log(data);
-                  table_task.ajax.reload();
-                  $('#large-Modal').modal('hide');
-                  Swal.fire(
-                    'Saved!',
-                    'Your file has been saved.',
-                    'success'
-                  )
-                } else {
-                  Swal.fire(
-                    'Gagal!',
-                    'Salah kirim data.',
-                    'error'
-                  )
+          // $.ajax({
+          //     url: "<?=base_url('proses/simpan/request');?>",
+          //     type: "post",
+          //     data: "progress="+progress+"&"+$('#request').serialize(),
+          //     success: function(data){
+          //       if (data=="true"){
+          //         console.log(data);
+          //         table_task.ajax.reload();
+          //         $('#large-Modal').modal('hide');
+          //         Swal.fire(
+          //           'Saved!',
+          //           'Your file has been saved.',
+          //           'success'
+          //         )
+          //       } else {
+          //         Swal.fire(
+          //           'Gagal!',
+          //           'Salah kirim data.',
+          //           'error'
+          //         )
 
-                }
-              }
-          })
+          //       }
+          //     }
+          // })
         });
 
         $('#divisi').on('change',function(){

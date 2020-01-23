@@ -179,6 +179,7 @@ if (!empty($sebagai)) {
                         <div class="col-sm-9">
                             <div class="progress">
                                 <div id="status-progress" class="progress-bar progress-bar-striped progress-bar-animated progress-bar-primary" role="progressbar" style="" aria-valuenow="" aria-valuemin="0" aria-valuemax="100"><b id="status-id"></b></div>
+                                <input style="display:none;" required id="progress" name="progress" type="range" value="1" min="1" max="100" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -389,7 +390,11 @@ if (!empty($sebagai)) {
               if($('#status').text()=="Baru"){
                 $('#tipe').val('update');
               } else {
-                $('#tipe').val('progress');
+                if($('#progress').val()==100){
+                  $('#tipe').val('done');
+                } else {
+                  $('#tipe').val('progress');
+                }
               }
             } else {
               $('#tipe').val('save');

@@ -158,16 +158,24 @@
                 {
                     data: null, render: function ( data, type, row, meta, dataToSet ) {
                         // return data.kodeRequest+' '+data.status;
+                        var pengganti = '';var pengganti2 = '';
                         switch (data.status) {
                             case "done":
                                 return "<a style='cursor:pointer;' id='view' data='" + row.kodeRequest + "' class='label label-success'><strong>Done</strong></a>";
                             case "onprogress":
-                                return "<a style='cursor:pointer;' id='view' data='" + row.kodeRequest + "' class='label label-warning'><strong>On Progress</strong></a>";
+                                if(data.dikerjakanOleh==<?=$nik;?>){
+                                  pengganti='progress';pengganti2='Progress!';
+                                } else {
+                                  pengganti='view';pengganti2='On Progress';
+                                }
+                                return "<a style='cursor:pointer;' id='"+pengganti+"' data='" + row.kodeRequest + "' class='label label-warning'><strong>"+pengganti2+"</strong></a>";
                             case "new":
-                                var pengganti = '';
-                                var pengganti2 = '';
-                                (<?=$jabatan;?>==1&&data.divisiTujuan==<?=$divisi;?>)?(pengganti='process'):(pengganti='view');
-                                (<?=$jabatan;?>==1&&data.divisiTujuan==<?=$divisi;?>)?(pengganti2='Process!'):(pengganti2='New');
+                                if(<?=$jabatan;?>==1&&data.divisiTujuan==<?=$divisi;?>){
+                                  pengganti='process';pengganti2='Process!';
+                                } else {
+                                  pengganti='view';pengganti2='New';
+                                }
+                                // (<?=$jabatan;?>==1&&data.divisiTujuan==<?=$divisi;?>)?():(pengganti2='New');
                                 return "<a style='cursor:pointer;' id='"+pengganti+"' data='" + row.kodeRequest + "' class='label label-primary'><strong>"+pengganti2+"</strong></a>";
                             case "rejected":
                                 return "<a  style='cursor:pointer;' id='view' data='" + row.kodeRequest + "' class='label label-danger'><strong>Rejected</strong></a>";
@@ -194,8 +202,11 @@
                 {
                     data: "divisiTujuan",
                     visible: false
-                }
-            ],
+                },
+                {
+                    data: "dikerjakanOleh",
+                    visible: false
+                }],
             initComplete: function() {
                 $('.btn-copy').html('<span class="feather icon-copy" data-toggle="tooltip" title="Copy To Clipboard"/> Copy</span>')
                 $('.btn-csv').html('<span class="feather icon-file-text" data-toggle="tooltip" title="Export To CSV"/> CSV</span>')
@@ -222,7 +233,7 @@
 
         $('#req-progress').on('click', function() {
             table_request.columns().search("").draw();
-            table_request.columns(2).search("on progress").draw();
+            table_request.columns(2).search("progress",true,true).draw();
         });
 
         $('#req-done').on('click', function() {
@@ -250,6 +261,14 @@
                 // console.log(this.getAttribute("data"));
                 $("#trigger-modal").click();
                 $("#load-modal-here").load("modal/request/v/" + datas);
+            }
+        });
+        $('#table-request tbody').on('click', 'a#progress', function() {
+            if (table_request.rows().count() !== 0) {
+                var datas = this.getAttribute("data");
+                // console.log(this.getAttribute("data"));
+                $("#trigger-modal").click();
+                $("#load-modal-here").load("modal/request/p/" + datas);
             }
         });
 

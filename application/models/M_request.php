@@ -138,6 +138,7 @@ class m_request extends CI_Model
 
         } else if ($this->input->post('tipe')=="update"){
             $this->db->set('status','onprogress');
+            $this->db->set('progress','1');
             $this->db->set('catatanTugas',$this->input->post('catatan'));
             $this->db->set('tanggalDikerjakan',date('d/m/Y', strtotime(' +1 day')));
             $this->db->set('dikerjakanOleh',$this->input->post('ditugaskan'));
